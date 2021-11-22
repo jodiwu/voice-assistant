@@ -16,12 +16,12 @@ import websocket
 import datetime
 import hashlib
 import base64
-import hmac
+import hmac #idk
 import json
-from urllib.parse import urlencode
+from urllib.parse import urlencode #idk
 import time
-import ssl
-from wsgiref.handlers import format_date_time
+import ssl #idk
+from wsgiref.handlers import format_date_time #idk
 from datetime import datetime
 from time import mktime
 import _thread as thread
@@ -53,7 +53,7 @@ class Ws_Param(object):
         # Combining Strings
         signature_origin = "host: " + "iat-api-sg.xf-yun.com" + "\n"
         signature_origin += "date: " + date + "\n"
-        signature_origin += "GET " + "/v2/iat " + "HTTP/1.1"
+        signature_origin += "GET /v2/iat HTTP/1.1"
         # Hmac-sha256 is used for encryption
         signature_sha = hmac.new(self.APISecret.encode('utf-8'), signature_origin.encode('utf-8'),
                                  digestmod=hashlib.sha256).digest()
