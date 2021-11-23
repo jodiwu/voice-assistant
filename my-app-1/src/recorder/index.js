@@ -171,7 +171,8 @@
      const signatureSha = hmacSHA256(signatureOrigin, apiSecret)
      const signature = Base64.stringify(signatureSha)
      const authorizationOrigin = `api_key="${apiKey}", algorithm="${algorithm}", headers="${headers}", signature="${signature}"`
-     const authorization = btoa(authorizationOrigin)
+    //  const authorization = btoa(authorizationOrigin)
+     const authorization = Base64(authorizationOrigin)
      const fullPath = `${url}?authorization=${authorization}&date=${date}&host=${host}`
      if ('WebSocket' in window) {
        this.ws = new WebSocket(fullPath)
@@ -290,7 +291,8 @@
      for (var i = 0; i < len; i++) {
        binary += String.fromCharCode(bytes[i])
      }
-     return window.btoa(binary)
+    //  return window.btoa(binary)
+    return window.Base64(binary)
    }
  }
  

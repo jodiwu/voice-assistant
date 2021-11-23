@@ -11,6 +11,7 @@ class App extends React.Component {
       recorder: new IatRecorder({
         onClose: (e) => {
           console.log('on close ' + JSON.stringify(e));
+          this.stop();
           this.setState({recordState: 'stopped'});
         },
         onError: (e) => {
@@ -61,7 +62,9 @@ class App extends React.Component {
   stopRecording() {
     console.log('stop recording');
     this.setState({recordState: 'stopping'});
-    this.state.recorder.stop();
+    // this.setState({recordState: 'stopped'});
+    // this.state.recorder.stop();
+    this.state.recorder.onClose();
   }
 
   buttonClick(e) {
