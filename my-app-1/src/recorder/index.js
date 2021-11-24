@@ -159,8 +159,9 @@
        buffer: buffer
      })
    }
+
    connectWebsocket () {
-     const url = 'wss://iat-api.xfyun.cn/v2/iat'
+     const url = 'wss://iat-api-sg.xf-yun.com/v2/iat'
      const host = 'iat-api.xfyun.cn'
      const apiKey = this.apiKey
      const apiSecret = this.apiSecret
@@ -168,11 +169,12 @@
      const algorithm = 'hmac-sha256'
      const headers = 'host date request-line'
      const signatureOrigin = `host: ${host}\ndate: ${date}\nGET /v2/iat HTTP/1.1`
+     console.log(`Signature origin: ${signatureOrigin}`)
      const signatureSha = hmacSHA256(signatureOrigin, apiSecret)
      const signature = Base64.stringify(signatureSha)
      const authorizationOrigin = `api_key="${apiKey}", algorithm="${algorithm}", headers="${headers}", signature="${signature}"`
-    //  const authorization = btoa(authorizationOrigin)
-     const authorization = Base64(authorizationOrigin)
+     console.log(`Authorization origin: ${authorizationOrigin}`)
+     const authorization = btoa(authorizationOrigin)
      const fullPath = `${url}?authorization=${authorization}&date=${date}&host=${host}`
      if ('WebSocket' in window) {
        this.ws = new WebSocket(fullPath)
@@ -291,8 +293,7 @@
      for (var i = 0; i < len; i++) {
        binary += String.fromCharCode(bytes[i])
      }
-    //  return window.btoa(binary)
-    return window.Base64(binary)
+    return window.btoa(binary)
    }
  }
  

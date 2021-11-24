@@ -18,7 +18,7 @@ export default {
     appId: 'g9c0a6d5',
     apiKey: '474a8a7f0b333903e40b33505052f14a',
     apiSecret: '9408d43cde1959965dab66552eecf8dc',
-    language: 'ja_jp',
+    language: 'en_us',
     accent: 'mandarin',
     pd: '',
     rlang: 'zh_cn',

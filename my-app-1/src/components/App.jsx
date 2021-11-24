@@ -11,7 +11,6 @@ class App extends React.Component {
       recorder: new IatRecorder({
         onClose: (e) => {
           console.log('on close ' + JSON.stringify(e));
-          this.stop();
           this.setState({recordState: 'stopped'});
         },
         onError: (e) => {
@@ -19,7 +18,10 @@ class App extends React.Component {
           this.setState({recordState: 'stopped'});
         },
         onMessage: (e) => {
-          console.log('on message');
+          const msg = JSON.parse(e.data);
+          if (msg.data && msg.data.result) {
+            console.log('on message ' + JSON.stringify(msg.data.result));
+          }
         },
         onStart: () => {
           console.log('on start');
@@ -62,9 +64,7 @@ class App extends React.Component {
   stopRecording() {
     console.log('stop recording');
     this.setState({recordState: 'stopping'});
-    // this.setState({recordState: 'stopped'});
-    // this.state.recorder.stop();
-    this.state.recorder.onClose();
+    this.state.recorder.stop();
   }
 
   buttonClick(e) {
@@ -79,7 +79,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-          <button disabled={this.state.recordState === 'stopping '} type="button" className="button" onClick={this.buttonClick}>{this.state.recordState === 'stopped' ? 'Start' : 'Stop'} Recording</button>
+          <button type="button" className="button" onClick={this.buttonClick}>{this.state.recordState === 'stopped' ? 'Start' : 'Stop'} Recording</button>
           {/* <button id="stop" onClick={}>Stop</button> */}
       </div>
     );
