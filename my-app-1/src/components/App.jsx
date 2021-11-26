@@ -20,7 +20,13 @@ class App extends React.Component {
         onMessage: (e) => {
           const msg = JSON.parse(e.data);
           if (msg.data && msg.data.result) {
-            console.log('on message ' + JSON.stringify(msg.data.result));
+            var output = []
+            for (var i = 0; i < msg.data.result.ws.length; i++) {
+              output.push(msg.data.result.ws[i].cw[0].w)
+            }
+            var sentence = output.join("");
+            console.log(sentence);
+            this.setState({textToShow: this.state.textToShow + sentence});
           }
         },
         onStart: () => {
@@ -37,7 +43,8 @@ class App extends React.Component {
         nunum: config.props['nunum'],
         vad_eos: config.props['vad_eos']
       }),
-      recordState: 'stopped'
+      recordState: 'stopped',
+      textToShow: '',
     };
     this.buttonClick = this.buttonClick.bind(this);
     console.log('constructor called');
@@ -71,6 +78,7 @@ class App extends React.Component {
     console.log('clicked');
     if (this.state.recordState === 'stopped') {
       this.startRecording();
+      this.setState({textToShow: ''})
     } else if (this.state.recordState === 'recording') {
       this.stopRecording();
     }
@@ -78,9 +86,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-          <button type="button" className="button" onClick={this.buttonClick}>{this.state.recordState === 'stopped' ? 'Start' : 'Stop'} Recording</button>
+      <div className='button'>
+          <button type="button" className={this.state.recordState === 'stopped' ? 'buttonStart' : 'buttonStop'} onClick={this.buttonClick}>{this.state.recordState === 'stopped' ? 'Start' : 'Stop'} Recording</button>
           {/* <button id="stop" onClick={}>Stop</button> */}
+          <p className='sentence'>{this.state.textToShow}</p>
       </div>
     );
   }

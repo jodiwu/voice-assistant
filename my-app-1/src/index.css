@@ -1,10 +1,18 @@
 body {
-  background-color: azure;
+  background-color: #3F3351;
 }
 
 .button {
-  background-color: #4CAF50; /* Green */
+  /* margin-left: auto;
+  width: 50%; */
+  text-align: center;
+  margin-top: 30vh;
+}
+
+.buttonStart {
+  background-color: rgb(158, 214, 74);
   border: none;
+  border-radius: 5px;
   color: white;
   padding: 15px 32px;
   text-align: center;
@@ -14,3 +22,20 @@ body {
   cursor: pointer;
 }
 
+.buttonStop {
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.sentence {
+  color: white;
+  font-size: 30px;
+}

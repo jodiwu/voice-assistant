@@ -1,27 +1,10 @@
-/**
- * Created by lycheng on 2019/8/1.
- * 
- * 语音听写流式 WebAPI 接口调用示例 接口文档（必看）：https://doc.xfyun.cn/rest_api/语音听写（流式版）.html
- * webApi 听写服务参考帖子（必看）：http://bbs.xfyun.cn/forum.php?mod=viewthread&tid=38947&extra=
- * 语音听写流式WebAPI 服务，热词使用方式：登陆开放平台https://www.xfyun.cn/后，找到控制台--我的应用---语音听写---个性化热词，上传热词
- * 注意：热词只能在识别的时候会增加热词的识别权重，需要注意的是增加相应词条的识别率，但并不是绝对的，具体效果以您测试为准。
- * 错误码链接：
- * https://www.xfyun.cn/doc/asr/voicedictation/API.html#%E9%94%99%E8%AF%AF%E7%A0%81
- * https://www.xfyun.cn/document/error-code （code返回错误码时必看）
- * 语音听写流式WebAPI 服务，方言或小语种试用方法：登陆开放平台https://www.xfyun.cn/后，在控制台--语音听写（流式）--方言/语种处添加
- * 添加后会显示该方言/语种的参数值
- * 
- */
-
  import hmacSHA256 from 'crypto-js/hmac-sha256';
  import Base64 from 'crypto-js/enc-base64';
  import recordWorker from './transform.pcm.worker'
  import createWorker from './create-worker'
  import locales from './locales.json'
  
- // 音频转码worker
  const recorderWorker = createWorker(recordWorker)
- // 记录处理的缓存音频
  const buffer = []
  const AudioContext = window.AudioContext || window.webkitAudioContext
  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia
@@ -36,8 +19,6 @@
      this.state = 'end'
      this.language = config.language || 'zh_cn'
      this.accent = config.accent || 'mandarin'
- 
-     //以下信息在控制台-我的应用-语音听写（流式版）页面获取
      this.appId = config.appId
      this.apiKey = config.apiKey
      this.apiSecret = config.apiSecret
@@ -262,7 +243,7 @@
          return false
        }
        const audioData = buffer.splice(0, 1280)
-       // 中间帧
+
        this.ws.send(JSON.stringify({
          'data': {
            'status': 1,
@@ -276,7 +257,6 @@
  
    wsOnMessage (e) {
      const jsonData = JSON.parse(e.data)
-     // 识别结束
      if (jsonData.code === 0 && jsonData.data.status === 2) {
        this.ws.close()
      }

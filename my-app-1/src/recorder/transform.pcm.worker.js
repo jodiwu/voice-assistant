@@ -1,12 +1,4 @@
-/**
- * Recorder EncodeWAV Worker
- * Note: only the recordWorker function's body codes will be loaded as worker.
- * 注意：仅该函数内部代码会被引入到 worker
- */
  const recordWorker = function () {
-    /**
-     * Created by lycheng on 2019/8/9.
-     */
     let self = this
     this.onmessage = function (e) {
       // eslint-disable-next-line default-case
